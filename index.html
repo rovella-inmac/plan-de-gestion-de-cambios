@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Gestión de Cambios - Defensas Ribereñas Olmos y Zaña</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        section {
+            scroll-margin-top: 80px;
+        }
+        .flow-arrow {
+            position: relative;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+        .flow-arrow::after {
+            content: '▼';
+            font-size: 2rem;
+            color: #00a8e8;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-15px);
+            }
+            60% {
+                transform: translateY(-8px);
+            }
+        }
+        .flow-card {
+            border-left: 4px solid #00a8e8;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .flow-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .kpi-box {
+            background: linear-gradient(135deg, #0f2540, #005F73);
+        }
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.75);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-[#0f2540] text-white p-6 shadow-lg">
+        <div class="container mx-auto text-center">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">PLAN DE GESTIÓN DE CAMBIOS</h1>
+            <p class="mt-2 text-lg text-gray-300">Defensas Ribereñas del Río Olmos y del Río Zaña</p>
+        </div>
+    </header>
+
+    <nav class="sticky top-0 bg-white/80 backdrop-blur-sm shadow-md z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center items-center h-16">
+                <div class="flex space-x-2 md:space-x-4 text-xs sm:text-sm md:text-base overflow-x-auto">
+                    <a href="#actores" class="text-gray-600 hover:text-[#0f2540] font-semibold px-3 py-2 rounded-md">Actores</a>
+                    <a href="#clasificacion" class="text-gray-600 hover:text-[#0f2540] font-semibold px-3 py-2 rounded-md">Clasificación</a>
+                    <a href="#flujo-rfi" class="text-gray-600 hover:text-[#0f2540] font-semibold px-3 py-2 rounded-md">Flujo RFI</a>
+                    <a href="#flujo-fcr" class="text-gray-600 hover:text-[#0f2540] font-semibold px-3 py-2 rounded-md">Flujo FCR</a>
+                    <a href="#red-line" class="text-gray-600 hover:text-[#0f2540] font-semibold px-3 py-2 rounded-md">Red Line</a>
+                    <a href="#pasos-contractuales" class="text-gray-600 hover:text-[#0f2540] font-semibold px-3 py-2 rounded-md">Pasos Contractuales</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="intro" class="text-center mb-12 pt-8">
+            <h2 class="text-2xl font-bold text-[#0f2540] mb-4">Optimizando la Ejecución de Grandes Obras de Infraestructura</h2>
+            <p class="max-w-3xl mx-auto text-gray-600">
+                Este plan establece una metodología rigurosa para identificar, evaluar e implementar cambios durante la construcción. El objetivo es garantizar la trazabilidad, controlar el impacto en costos y plazos, y mantener una comunicación fluida y formal entre todos los actores clave del proyecto.
+            </p>
+        </section>
+        
+        <section id="actores" class="mb-16">
+            <h3 class="text-xl font-bold text-center text-[#0f2540] mb-8">Actores Clave en la Gestión de Cambios</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 text-center">
+                
+                <!-- Contratante -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-b-4 border-[#d40808]">
+                    <div class="text-4xl mb-3">🏢</div>
+                    <button id="openContratanteModal" class="font-bold text-lg hover:underline text-[#0f2540]">Contratante (ANIN)</button>
+                    <p class="text-sm text-gray-500 mt-1">Acepta o rechaza cambios y revisa eventos compensables.</p>
+                </div>
+
+                <!-- Gerente de Proyecto -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-b-4 border-[#EE9B00]">
+                    <div class="text-4xl mb-3">👨‍💼</div>
+                    <button id="openGerenteModal" class="font-bold text-lg hover:underline text-[#0f2540]">Gerente de Proyecto</button>
+                    <p class="text-sm text-gray-500 mt-1">Actúa como intermediario, evalúa cambios y emite órdenes.</p>
+                </div>
+
+                <!-- Contratista -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-b-4 border-[#0f2540]">
+                    <div class="text-4xl mb-3">👷‍♂️</div>
+                    <button id="openContratistaModal" class="font-bold text-lg hover:underline text-[#0f2540]">Contratista</button>
+                    <p class="text-sm text-gray-500 mt-1">Ejecuta la obra, gestiona RFI/FCR y es responsable del diseño.</p>
+                </div>
+
+                <!-- Subcontratista -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-b-4 border-[#00a8e8]">
+                    <div class="text-4xl mb-3">🛠️</div>
+                    <button id="openSubcontratistaModal" class="font-bold text-lg hover:underline text-[#0f2540]">Subcontratista</button>
+                    <p class="text-sm text-gray-500 mt-1">Identifica necesidades de cambio en campo y las comunica.</p>
+                </div>
+                
+                <!-- Supervisor de Calidad -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-b-4 border-[#d40808]">
+                    <div class="text-4xl mb-3">🔎</div>
+                    <button id="openSupervisorModal" class="font-bold text-lg hover:underline text-[#0f2540]">Supervisor de Calidad</button>
+                    <p class="text-sm text-gray-500 mt-1">Asegura el cumplimiento de estándares y notifica defectos.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="clasificacion" class="bg-white p-8 rounded-lg shadow-xl mb-16">
+             <div class="text-center">
+                <h2 class="text-2xl font-bold text-[#0f2540] mb-2">El Punto de Partida: ¿Cambio Sustancial o No Sustancial?</h2>
+                <p class="max-w-3xl mx-auto text-gray-600 mb-8">
+                    Toda modificación identificada en campo se clasifica según su impacto, determinando el proceso a seguir. Esta decisión inicial es crucial para una gestión eficiente.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="p-6 bg-gray-50 rounded-lg border-2 border-dashed border-[#00a8e8] flex flex-col justify-between">
+                    <div>
+                        <button id="openNoSustancialModal" class="font-bold text-xl text-[#00a8e8] hover:underline">Cambio NO Sustancial</button>
+                        <p class="mt-2 text-gray-600">Consultas, aclaraciones o modificaciones menores que no alteran el diseño fundamental y tienen un impacto leve o nulo en costo, tiempo o alcance.</p>
+                    </div>
+                    <a href="#flujo-rfi" class="block mt-4 text-center">
+                        <p class="inline-block font-bold text-lg text-gray-700 hover:text-[#0f2540] hover:bg-blue-100 p-2 rounded-lg transition-colors duration-300 cursor-pointer">
+                            Se gestiona vía → RFI
+                        </p>
+                    </a>
+                </div>
+                <div class="p-6 bg-gray-50 rounded-lg border-2 border-dashed border-[#d40808] flex flex-col justify-between">
+                    <div>
+                        <button id="openSustancialModal" class="font-bold text-xl text-[#d40808] hover:underline">Cambio SUSTANCIAL</button>
+                        <p class="mt-2 text-gray-600">Modificaciones que impactan significativamente el tiempo, costo, alcance o la calidad del proyecto. Requieren una evaluación y aprobación formal.</p>
+                    </div>
+                     <a href="#flujo-fcr" class="block mt-4 text-center">
+                        <p class="inline-block font-bold text-lg text-gray-700 hover:text-[#d40808] hover:bg-red-100 p-2 rounded-lg transition-colors duration-300 cursor-pointer">
+                            Se gestiona vía → FCR
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <div class="flow-arrow"></div>
+
+        <section id="flujo-rfi" class="mb-16">
+            <div class="bg-white p-8 rounded-lg shadow-xl">
+                <h2 class="text-2xl font-bold text-[#0f2540] mb-2">Flujo de Proceso: Solicitud de Información (RFI)</h2>
+                <p class="text-gray-600 mb-8">Este es el camino ágil para resolver dudas y gestionar cambios menores, asegurando la continuidad de los trabajos sin afectar los pilares del proyecto.</p>
+                <div class="space-y-4">
+                    <div class="flow-card bg-gray-50 p-4 rounded-md">
+                        <span class="font-bold text-[#0f2540]">1. Planteamiento:</span> El Subcontratista o Contratista identifica una duda o necesidad de aclaración en campo y la registra.
+                    </div>
+                    <div class="text-center text-2xl text-[#00a8e8]">↓</div>
+                    <div class="flow-card bg-gray-50 p-4 rounded-md">
+                        <span class="font-bold text-[#0f2540]">2. Evaluación Interna (Contratista):</span> A través de Autodesk Construction Cloud, el equipo técnico del Contratista evalúa la consulta.
+                    </div>
+                    <div class="text-center text-2xl text-[#00a8e8]">↓</div>
+                    <div class="flow-card bg-gray-50 p-4 rounded-md">
+                        <span class="font-bold text-[#0f2540]">3. Decisión:</span> Se determina si es una simple aclaración o si implica un cambio sustancial.
+                    </div>
+                </div>
+                 <div class="text-center mt-8">
+                    <button id="openRfiModal" class="bg-[#00a8e8] text-white font-bold py-2 px-6 rounded-lg hover:bg-[#0f2540] transition duration-300 shadow-lg">
+                        Ver Flujograma Completo
+                    </button>
+                </div>
+                 <div class="mt-8 kpi-box text-white p-6 rounded-lg text-center">
+                    <p class="text-4xl font-extrabold mt-2">7 Días</p>
+                    <p class="text-sm opacity-90">Plazo máximo para que el Contratista responda una RFI.</p>
+                </div>
+            </div>
+        </section>
+        
+        <div class="flow-arrow"></div>
+        
+        <section id="flujo-fcr" class="mb-16">
+            <div class="bg-white p-8 rounded-lg shadow-xl">
+                 <h2 class="text-2xl font-bold text-[#0f2540] mb-2">Flujo de Proceso: Solicitud de Cambio en Campo (FCR)</h2>
+                 <p class="text-gray-600 mb-8">Para modificaciones de alto impacto, este proceso formal garantiza una evaluación técnica, análisis de impacto y aprobación documentada antes de la implementación.</p>
+                <div class="space-y-4">
+                    <div class="flow-card bg-gray-50 p-4 rounded-md">
+                        <span class="font-bold text-[#0f2540]">1. Identificación:</span> Se detecta una necesidad de cambio sustancial (ej. por interferencia o defecto en diseño).
+                    </div>
+                     <div class="text-center text-2xl text-[#00a8e8]">↓</div>
+                     <div class="flow-card bg-gray-50 p-4 rounded-md">
+                        <span class="font-bold text-[#0f2540]">2. Evaluación Técnica (Contratista):</span> Se prepara un "Sustento Técnico" detallando la solución y el impacto.
+                    </div>
+                     <div class="text-center text-2xl text-[#00a8e8]">↓</div>
+                     <div class="flow-card bg-gray-50 p-4 rounded-md">
+                        <span class="font-bold text-[#0f2540]">3. Envío Formal (Aconex):</span> El FCR y su sustento se envían formalmente al Gerente de Proyecto (ANIN).
+                    </div>
+                     <div class="text-center text-2xl text-[#00a8e8]">↓</div>
+                     <div class="flow-card bg-red-50 p-4 rounded-md border-l-4 border-red-500">
+                        <span class="font-bold text-red-700">4. Evento Compensable:</span> Con el FCR aceptado, se inicia el proceso contractual para ajustar costo y/o tiempo.
+                    </div>
+                </div>
+                <div class="text-center mt-8">
+                    <button id="openFcrModal" class="bg-[#d40808] text-white font-bold py-2 px-6 rounded-lg hover:bg-[#a10606] transition duration-300 shadow-lg">
+                        Ver Flujograma Completo
+                    </button>
+                </div>
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                     <div class="kpi-box text-white p-4 rounded-lg">
+                        <p class="text-3xl font-extrabold">7 Días</p>
+                        <p class="text-xs opacity-90">Evaluación Técnica del Contratista</p>
+                    </div>
+                    <div class="kpi-box text-white p-4 rounded-lg">
+                        <p class="text-3xl font-extrabold">7 Días</p>
+                        <p class="text-xs opacity-90">Respuesta del Gerente de Proyecto</p>
+                    </div>
+                     <div class="kpi-box text-white p-4 rounded-lg">
+                        <p class="text-3xl font-extrabold">21 Días</p>
+                        <p class="text-xs opacity-90">Plazo para notificar Evento Compensable</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="flow-arrow"></div>
+
+        <section id="red-line" class="mb-16">
+            <div class="bg-white p-8 rounded-lg shadow-xl">
+                <h2 class="text-2xl font-bold text-[#d40808] mb-2">"Red Line"</h2>
+                <p class="text-gray-600 mb-8">Es una herramienta para documentar modificaciones inmediatas y no sustanciales directamente en los planos con marcas de color rojo, asegurando la continuidad del trabajo en campo.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h4 class="font-bold text-lg text-[#0f2540]">Uso Principal</h4>
+                        <p class="mt-2">Para cambios que requieren atención inmediata, no modifican la funcionalidad del diseño y son esenciales para la continuidad de un trabajo.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h4 class="font-bold text-lg text-[#0f2540]">Procedimiento</h4>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-gray-600">
+                            <li>Elaborado en campo en conjunto de actores involuclados.</li>
+                            <li>Debe ser claro, preciso y completo.</li>
+                            <li>Debe ser sellado y firmado por los responsables (Sup. Obra - Gestor de Obra - Sup. Calidad).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="flow-arrow"></div>
+
+        <section id="pasos-contractuales" class="mb-16">
+            <div class="bg-white p-8 rounded-lg shadow-xl">
+                <h2 class="text-2xl font-bold text-[#0f2540] mb-2">Pasos Contractuales para Implementar el Cambio</h2>
+                <p class="text-gray-600 mb-8">Cuando un RFI o FCR resulta en un Evento Compensable, se activa un proceso formal para ajustar el contrato en tiempo y costo.</p>
+                <ol class="relative border-l border-gray-200 dark:border-gray-700">                  
+                    <li class="mb-10 ml-6">            
+                        <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">
+                           1
+                        </span>
+                        <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900">Comunicación Inicial</h3>
+                        <p class="mb-4 text-base font-normal text-gray-500">La solicitud (RFI/FCR) se comunica formalmente en Aconex, detallando el motivo, beneficio y una estimación del impacto.</p>
+                    </li>
+                    <li class="mb-10 ml-6">
+                        <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">
+                           2
+                        </span>
+                        <h3 class="mb-1 text-lg font-semibold text-gray-900">Instrucción de Cotización</h3>
+                        <time class="block mb-2 text-sm font-normal leading-none text-gray-400">Plazo Contratista: 3 semanas</time>
+                        <p class="text-base font-normal text-gray-500">El Gerente de Proyecto instruye al Contratista a presentar un presupuesto detallado para la modificación propuesta.</p>
+                    </li>
+                    <li class="mb-10 ml-6">
+                        <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">
+                           3
+                        </span>
+                        <h3 class="mb-1 text-lg font-semibold text-gray-900">Revisión y Aceptación</h3>
+                        <time class="block mb-2 text-sm font-normal leading-none text-gray-400">Plazo Gerente de Proyecto: 2 semanas</time>
+                        <p class="text-base font-normal text-gray-500">El Gerente de Proyecto revisa y responde a la cotización. Si es aceptada, se notifica formalmente al Contratista.</p>
+                    </li>
+                     <li class="ml-6">
+                        <span class="absolute flex items-center justify-center w-6 h-6 bg-green-100 rounded-full -left-3 ring-8 ring-white">
+                           ✓
+                        </span>
+                        <h3 class="mb-1 text-lg font-semibold text-gray-900">Implementación del Evento Compensable</h3>
+                        <p class="text-base font-normal text-gray-500">Con la aceptación, se implementa el cambio, ajustando el monto de los Precios y, si aplica, las Fechas de Culminación.</p>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+
+        <section id="ecosistema-digital" class="mb-16">
+            <h2 class="text-2xl font-bold text-center text-[#0f2540] mb-8">Ecosistema Digital para la Trazabilidad</h2>
+            <p class="max-w-3xl mx-auto text-center text-gray-600 mb-8">La gestión se apoya en un Entorno Común de Datos (CDE) que asegura que cada paso quede registrado, utilizando dos plataformas clave.</p>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0">
+                <div class="bg-white p-6 rounded-lg shadow-md text-center w-full md:w-1/3">
+                    <h3 class="font-bold text-lg text-[#0f2540]">Autodesk Construction Cloud</h3>
+                    <p class="text-sm text-gray-500 mt-2">Plataforma para la gestión y colaboración interna del Contratista y Subcontratistas.</p>
+                </div>
+                <div class="text-4xl font-bold text-[#00a8e8] mx-6 my-4 md:my-0 transform md:rotate-0 rotate-90">↔️</div>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center w-full md:w-1/3">
+                    <h3 class="font-bold text-lg text-[#d40808]">Aconex</h3>
+                    <p class="text-sm text-gray-500 mt-2">Plataforma para la comunicación formal y contractual con el Contratante (ANIN).</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-[#0f2540] text-white text-center p-4 mt-8">
+        <p class="text-sm opacity-80">&copy; 2025 ANIN - Consorcio Rovella-Inmac. Plan de Gestión de Cambios - Basado en los documentos APROBADOS (400192-CRIP001-000-XX-PL-ZZ-000024 - 400194-CRIP001-000-XX-PL-ZZ-000026 R04).</p>
+    </footer>
+
+    <!-- Modals -->
+    <div id="rfiModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+        <div class="bg-white rounded-lg shadow-2xl max-w-4xl w-full max-h-full overflow-auto">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h3 class="text-xl font-bold text-[#00a8e8]">Flujograma de Proceso RFI</h3>
+                <button id="closeRfiModal" class="text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            </div>
+            <div class="p-4">
+                <img src="https://i.postimg.cc/15CngBQr/02-RFI.png" alt="Flujograma RFI" class="w-full h-auto rounded">
+            </div>
+        </div>
+    </div>
+
+    <div id="fcrModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+        <div class="bg-white rounded-lg shadow-2xl max-w-4xl w-full max-h-full overflow-auto">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h3 class="text-xl font-bold text-[#d40808]">Flujograma de Proceso FCR</h3>
+                <button id="closeFcrModal" class="text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            </div>
+            <div class="p-4">
+                <img src="https://i.postimg.cc/bwZG1nYc/04-FCR.png" alt="Flujograma FCR" class="w-full h-auto rounded">
+            </div>
+        </div>
+    </div>
+    
+    <div id="noSustancialModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+        <div class="bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-full overflow-auto">
+            <div class="flex justify-between items-center p-4 border-b border-gray-200">
+                <h3 class="text-xl font-bold text-[#00a8e8]">Detalle: Cambio No Sustancial</h3>
+                <button id="closeNoSustancialModal" class="text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            </div>
+            <div class="p-6">
+                <p class="mb-4 text-gray-700">Es un cambio realizado durante la construcción que no genera cambios fundamentales en el Diseño, y que puede impactar levemente en el tiempo, costo y/o alcance. Se gestionan mediante RFI.</p>
+                <h4 class="font-semibold text-gray-800 mb-2">Ejemplos:</h4>
+                <ul class="list-disc list-inside space-y-1 text-gray-600">
+                    <li>Agregar un detalle adicional para clarificar información técnica.</li>
+                    <li>Aclaración sobre el detalle de acero en estructuras.</li>
+                    <li>Agregar detalles de protección en estructuras conexas.</li>
+                    <li>Realizar el desvío de un curso de agua menor.</li>
+                    <li>Precisiones o aclaraciones en documentos del Expediente de Diseño.</li>
+                    <li>Replanteo de Planos por variaciones menores de topografía.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="sustancialModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+        <div class="bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-full overflow-auto">
+            <div class="flex justify-between items-center p-4 border-b border-gray-200">
+                <h3 class="text-xl font-bold text-[#d40808]">Detalle: Cambio Sustancial</h3>
+                <button id="closeSustancialModal" class="text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            </div>
+            <div class="p-6">
+                <p class="mb-4 text-gray-700">Es un cambio en los Diseños (planos, especificaciones, cronogramas, etc.) que impacta en el tiempo, costo y/o alcance del Contrato. Se gestionan principalmente mediante un FCR.</p>
+                <h4 class="font-semibold text-gray-800 mb-2">Ejemplos:</h4>
+                <ul class="list-disc list-inside space-y-1 text-gray-600">
+                    <li>Interferencias no mapeadas que son necesarias para la funcionalidad.</li>
+                    <li>Cambios de alineamiento, niveles y dimensiones de los diques.</li>
+                    <li>Cambios en los espesores del enrocado y/o tamaño de la roca.</li>
+                    <li>Cambios en los diseños de las obras de captación.</li>
+                    <li>Incorporación o reducción de nuevas áreas de descolmatación.</li>
+                    <li>Cambio de los materiales a utilizar para la conformación de diques.</li>
+                    <li>Un Defecto en el diseño aceptado que conduce a un Evento Compensable.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actor Modals -->
+    <div id="contratanteModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+        <div class="bg-white rounded-lg shadow-2xl max-w-lg w-full">
+            <div class="flex justify-between items-center p-4 border-b"><h3 class="text-xl font-bold text-[#d40808]">Roles: Contratante (ANIN)</h3><button id="closeContratanteModal" class="text-gray-500 text-3xl">&times;</button></div>
+            <div class="p-6"><ul class="list-disc list-inside space-y-2 text-gray-600"><li>Aceptar o rechazar cambios significativos.</li><li>Participar en la revisión de eventos compensables.</li><li>Efectuar pagos finales derivados de liberación de áreas.</li><li>Facilitar la negociación de predios.</li><li>Puede solicitar cambios en el diseño aceptado.</li></ul></div>
+        </div>
+    </div>
+    <div id="gerenteModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+        <div class="bg-white rounded-lg shadow-2xl max-w-lg w-full">
+            <div class="flex justify-between items-center p-4 border-b"><h3 class="text-xl font-bold text-[#EE9B00]">Roles: Gerente de Proyecto</h3><button id="closeGerenteModal" class="text-gray-500 text-3xl">&times;</button></div>
+            <div class="p-6"><ul class="list-disc list-inside space-y-2 text-gray-600"><li>Evaluación inicial de cambios.</li><li>Evaluar y comunicar Eventos Compensables.</li><li>Auditar costos, tasas y tarifas del Contratista.</li><li>Aceptar planes de gestión y equipo del Contratista.</li><li>Responsable de la aceptación de todos los documentos.</li></ul></div>
+        </div>
+    </div>
+    <div id="contratistaModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+        <div class="bg-white rounded-lg shadow-2xl max-w-lg w-full">
+            <div class="flex justify-between items-center p-4 border-b"><h3 class="text-xl font-bold text-[#0f2540]">Roles: Contratista</h3><button id="closeContratistaModal" class="text-gray-500 text-3xl">&times;</button></div>
+            <div class="p-6"><ul class="list-disc list-inside space-y-2 text-gray-600"><li>Único responsable del diseño total de las obras.</li><li>Asumir riesgo por información del Contratante.</li><li>Gestionar paquetes de trabajo y subcontratación.</li><li>Responsable de la gestión para Liberación de Áreas.</li><li>Llevar registros de cuentas y pagos.</li></ul></div>
+        </div>
+    </div>
+    <div id="subcontratistaModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+        <div class="bg-white rounded-lg shadow-2xl max-w-lg w-full">
+            <div class="flex justify-between items-center p-4 border-b"><h3 class="text-xl font-bold text-[#00a8e8]">Roles: Subcontratista</h3><button id="closeSubcontratistaModal" class="text-gray-500 text-3xl">&times;</button></div>
+            <div class="p-6"><ul class="list-disc list-inside space-y-2 text-gray-600"><li>Identificar y reportar cambios necesarios (RFI/SDI).</li><li>Seguir los procedimientos establecidos para la gestión de cambios.</li></ul></div>
+        </div>
+    </div>
+    <div id="supervisorModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+        <div class="bg-white rounded-lg shadow-2xl max-w-lg w-full">
+            <div class="flex justify-between items-center p-4 border-b"><h3 class="text-xl font-bold text-[#d40808]">Roles: Supervisor de Calidad</h3><button id="closeSupervisorModal" class="text-gray-500 text-3xl">&times;</button></div>
+            <div class="p-6"><ul class="list-disc list-inside space-y-2 text-gray-600"><li>Asegurar que los cambios cumplan con la calidad.</li><li>Realizar inspecciones y certificar culminación.</li><li>Notificar Defectos al Contratista.</li><li>Asegurarse que no ocurran desviaciones no aceptadas.</li></ul></div>
+        </div>
+    </div>
+
+
+    <script>
+        // Generic Modal Logic
+        const modals = [
+            { id: 'rfiModal', openBtn: 'openRfiModal', closeBtn: 'closeRfiModal' },
+            { id: 'fcrModal', openBtn: 'openFcrModal', closeBtn: 'closeFcrModal' },
+            { id: 'noSustancialModal', openBtn: 'openNoSustancialModal', closeBtn: 'closeNoSustancialModal' },
+            { id: 'sustancialModal', openBtn: 'openSustancialModal', closeBtn: 'closeSustancialModal' },
+            { id: 'contratanteModal', openBtn: 'openContratanteModal', closeBtn: 'closeContratanteModal' },
+            { id: 'gerenteModal', openBtn: 'openGerenteModal', closeBtn: 'closeGerenteModal' },
+            { id: 'contratistaModal', openBtn: 'openContratistaModal', closeBtn: 'closeContratistaModal' },
+            { id: 'subcontratistaModal', openBtn: 'openSubcontratistaModal', closeBtn: 'closeSubcontratistaModal' },
+            { id: 'supervisorModal', openBtn: 'openSupervisorModal', closeBtn: 'closeSupervisorModal' }
+        ];
+
+        const openModal = (modal) => {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeModal = (modal) => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        };
+
+        modals.forEach(m => {
+            const modalEl = document.getElementById(m.id);
+            const openBtnEl = document.getElementById(m.openBtn);
+            const closeBtnEl = document.getElementById(m.closeBtn);
+
+            if (modalEl && openBtnEl && closeBtnEl) {
+                openBtnEl.addEventListener('click', () => openModal(modalEl));
+                closeBtnEl.addEventListener('click', () => closeModal(modalEl));
+                modalEl.addEventListener('click', (e) => {
+                    if (e.target === modalEl) closeModal(modalEl);
+                });
+            }
+        });
+
+        // Global Escape Key Listener
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                modals.forEach(m => {
+                    const modalEl = document.getElementById(m.id);
+                    if (modalEl && !modalEl.classList.contains('hidden')) {
+                        closeModal(modalEl);
+                    }
+                });
+            }
+        });
+
+    </script>
+
+</body>
+</html>
