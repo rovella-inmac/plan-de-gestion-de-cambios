@@ -69,6 +69,7 @@
             <div class="flex justify-center items-center h-16">
                 <div class="flex space-x-2 md:space-x-4 text-xs sm:text-sm md:text-base overflow-x-auto">
                     <a href="#actores" class="text-gray-600 hover:text-[#0f2540] font-semibold px-3 py-2 rounded-md">Actores</a>
+                    <a href="#conceptos-clave" class="text-gray-600 hover:text-[#0f2540] font-semibold px-3 py-2 rounded-md">Conceptos</a>
                     <a href="#clasificacion" class="text-gray-600 hover:text-[#0f2540] font-semibold px-3 py-2 rounded-md">Clasificación</a>
                     <a href="#flujo-rfi" class="text-gray-600 hover:text-[#0f2540] font-semibold px-3 py-2 rounded-md">Flujo RFI</a>
                     <a href="#flujo-fcr" class="text-gray-600 hover:text-[#0f2540] font-semibold px-3 py-2 rounded-md">Flujo FCR</a>
@@ -92,42 +93,65 @@
             <h3 class="text-xl font-bold text-center text-[#0f2540] mb-8">Actores Clave en la Gestión de Cambios</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 text-center">
                 
-                <!-- Contratante -->
                 <div class="bg-white p-6 rounded-lg shadow-md border-b-4 border-[#d40808]">
                     <div class="text-4xl mb-3">🏢</div>
-                    <button id="openContratanteModal" class="font-bold text-lg hover:underline text-[#0f2540]">Contratante (ANIN)</button>
-                    <p class="text-sm text-gray-500 mt-1">Acepta o rechaza cambios y revisa eventos compensables.</p>
+                    <button id="openContratanteModal" class="w-full bg-gray-100 font-bold text-lg text-[#0f2540] px-4 py-2 rounded-lg shadow hover:bg-gray-200 transition-colors duration-300">Contratante (ANIN)</button>
+                    <p class="text-sm text-gray-500 mt-3">Acepta o rechaza cambios y revisa eventos compensables.</p>
                 </div>
 
-                <!-- Gerente de Proyecto -->
                 <div class="bg-white p-6 rounded-lg shadow-md border-b-4 border-[#EE9B00]">
                     <div class="text-4xl mb-3">👨‍💼</div>
-                    <button id="openGerenteModal" class="font-bold text-lg hover:underline text-[#0f2540]">Gerente de Proyecto</button>
-                    <p class="text-sm text-gray-500 mt-1">Actúa como intermediario, evalúa cambios y emite órdenes.</p>
+                    <button id="openGerenteModal" class="w-full bg-gray-100 font-bold text-lg text-[#0f2540] px-4 py-2 rounded-lg shadow hover:bg-gray-200 transition-colors duration-300">Gerente de Proyecto</button>
+                    <p class="text-sm text-gray-500 mt-3">Actúa como intermediario, evalúa cambios y emite instrucciones.</p>
                 </div>
 
-                <!-- Contratista -->
                 <div class="bg-white p-6 rounded-lg shadow-md border-b-4 border-[#0f2540]">
                     <div class="text-4xl mb-3">👷‍♂️</div>
-                    <button id="openContratistaModal" class="font-bold text-lg hover:underline text-[#0f2540]">Contratista</button>
-                    <p class="text-sm text-gray-500 mt-1">Ejecuta la obra, gestiona RFI/FCR y es responsable del diseño.</p>
+                    <button id="openContratistaModal" class="w-full bg-gray-100 font-bold text-lg text-[#0f2540] px-4 py-2 rounded-lg shadow hover:bg-gray-200 transition-colors duration-300">Contratista</button>
+                    <p class="text-sm text-gray-500 mt-3">Ejecuta la obra, gestiona RFI/FCR y es responsable del diseño y la construcción.</p>
                 </div>
 
-                <!-- Subcontratista -->
                 <div class="bg-white p-6 rounded-lg shadow-md border-b-4 border-[#00a8e8]">
                     <div class="text-4xl mb-3">🛠️</div>
-                    <button id="openSubcontratistaModal" class="font-bold text-lg hover:underline text-[#0f2540]">Subcontratista</button>
-                    <p class="text-sm text-gray-500 mt-1">Identifica necesidades de cambio en campo y las comunica.</p>
+                    <button id="openSubcontratistaModal" class="w-full bg-gray-100 font-bold text-lg text-[#0f2540] px-4 py-2 rounded-lg shadow hover:bg-gray-200 transition-colors duration-300">Subcontratista</button>
+                    <p class="text-sm text-gray-500 mt-3">Identifica necesidades de cambio en campo y las comunica.</p>
                 </div>
                 
-                <!-- Supervisor de Calidad -->
                 <div class="bg-white p-6 rounded-lg shadow-md border-b-4 border-[#d40808]">
                     <div class="text-4xl mb-3">🔎</div>
-                    <button id="openSupervisorModal" class="font-bold text-lg hover:underline text-[#0f2540]">Supervisor de Calidad</button>
-                    <p class="text-sm text-gray-500 mt-1">Asegura el cumplimiento de estándares y notifica defectos.</p>
+                    <button id="openSupervisorModal" class="w-full bg-gray-100 font-bold text-lg text-[#0f2540] px-4 py-2 rounded-lg shadow hover:bg-gray-200 transition-colors duration-300">Supervisor de Calidad</button>
+                    <p class="text-sm text-gray-500 mt-3">Asegura el cumplimiento de estándares y notifica defectos.</p>
                 </div>
             </div>
         </section>
+
+        <div class="flow-arrow"></div>
+
+        <section id="conceptos-clave" class="mb-16">
+            <div class="bg-white p-8 rounded-lg shadow-xl">
+                <h2 class="text-2xl font-bold text-center text-[#0f2540] mb-8">Conceptos Clave</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-red-500 flex flex-col items-start">
+                        <button id="openRedLineModal" class="bg-red-500 text-white font-bold text-lg px-4 py-2 rounded-lg shadow hover:bg-red-600 transition-colors duration-300">RED LINE</button>
+                        <p class="text-sm text-gray-600 mt-2">Anotaciones a mano sobre planos para indicar cambios propuestos en campo.</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-blue-500 flex flex-col items-start">
+                        <button id="openRfiDefModal" class="bg-blue-500 text-white font-bold text-lg px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition-colors duration-300">RFI</button>
+                        <p class="text-sm text-gray-600 mt-2">Solicitud formal de información para aclarar o detallar aspectos de la obra.</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-yellow-500 flex flex-col items-start">
+                        <button id="openFcrDefModal" class="bg-yellow-500 text-white font-bold text-lg px-4 py-2 rounded-lg shadow hover:bg-yellow-600 transition-colors duration-300">FCR</button>
+                        <p class="text-sm text-gray-600 mt-2">Solicitud de cambio de ingeniería o alcance para resolver un problema técnico.</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-green-500 flex flex-col items-start">
+                        <button id="openEventoModal" class="bg-green-500 text-white font-bold text-lg px-4 py-2 rounded-lg shadow hover:bg-green-600 transition-colors duration-300">EVENTO COMPENSABLE</button>
+                        <p class="text-sm text-gray-600 mt-2">Evento que puede dar lugar a un ajuste en el costo y/o plazo del proyecto.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="flow-arrow"></div>
 
         <section id="clasificacion" class="bg-white p-8 rounded-lg shadow-xl mb-16">
              <div class="text-center">
@@ -139,8 +163,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="p-6 bg-gray-50 rounded-lg border-2 border-dashed border-[#00a8e8] flex flex-col justify-between">
                     <div>
-                        <button id="openNoSustancialModal" class="font-bold text-xl text-[#00a8e8] hover:underline">Cambio NO Sustancial</button>
-                        <p class="mt-2 text-gray-600">Consultas, aclaraciones o modificaciones menores que no alteran el diseño fundamental y tienen un impacto leve o nulo en costo, tiempo o alcance.</p>
+                        <button id="openNoSustancialModal" class="font-bold text-xl text-white bg-[#00a8e8] w-full px-4 py-2 rounded-lg shadow hover:bg-[#0077b6] transition-colors duration-300">Cambio NO Sustancial</button>
+                        <p class="mt-4 text-gray-600">Consultas, aclaraciones o modificaciones menores que no alteran el diseño fundamental y tienen un impacto leve o nulo en costo, tiempo o alcance.</p>
                     </div>
                     <a href="#flujo-rfi" class="block mt-4 text-center">
                         <p class="inline-block font-bold text-lg text-gray-700 hover:text-[#0f2540] hover:bg-blue-100 p-2 rounded-lg transition-colors duration-300 cursor-pointer">
@@ -150,8 +174,8 @@
                 </div>
                 <div class="p-6 bg-gray-50 rounded-lg border-2 border-dashed border-[#d40808] flex flex-col justify-between">
                     <div>
-                        <button id="openSustancialModal" class="font-bold text-xl text-[#d40808] hover:underline">Cambio SUSTANCIAL</button>
-                        <p class="mt-2 text-gray-600">Modificaciones que impactan significativamente el tiempo, costo, alcance o la calidad del proyecto. Requieren una evaluación y aprobación formal.</p>
+                        <button id="openSustancialModal" class="font-bold text-xl text-white bg-[#d40808] w-full px-4 py-2 rounded-lg shadow hover:bg-[#a10606] transition-colors duration-300">Cambio SUSTANCIAL</button>
+                        <p class="mt-4 text-gray-600">Modificaciones que impactan significativamente el tiempo, costo, alcance o la calidad del proyecto. Requieren una evaluación y aprobación formal.</p>
                     </div>
                      <a href="#flujo-fcr" class="block mt-4 text-center">
                         <p class="inline-block font-bold text-lg text-gray-700 hover:text-[#d40808] hover:bg-red-100 p-2 rounded-lg transition-colors duration-300 cursor-pointer">
@@ -424,6 +448,32 @@
         </div>
     </div>
 
+    <!-- Conceptos Clave Modals -->
+    <div id="redLineModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+        <div class="bg-white rounded-lg shadow-2xl max-w-lg w-full">
+            <div class="flex justify-between items-center p-4 border-b"><h3 class="text-xl font-bold text-red-700">Definición: RED LINE</h3><button id="closeRedLineModal" class="text-gray-500 text-3xl">&times;</button></div>
+            <div class="p-6"><p class="text-gray-700">Anotaciones o dibujos a mano alzada (generalmente en color rojo) realizadas directamente sobre planos o documentos existentes para indicar cambios o modificaciones propuestas en campo antes de su formalización. Llevan el sello de RED LINE en color rojo, tanto físico como electrónico. Son un documento base para la gestión de cambios, utilizados para cambios no sustanciales.</p></div>
+        </div>
+    </div>
+    <div id="rfiDefModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+        <div class="bg-white rounded-lg shadow-2xl max-w-lg w-full">
+            <div class="flex justify-between items-center p-4 border-b"><h3 class="text-xl font-bold text-blue-700">Definición: RFI</h3><button id="closeRfiDefModal" class="text-gray-500 text-3xl">&times;</button></div>
+            <div class="p-6"><p class="text-gray-700">Documentos utilizados para realizar solicitudes formales de información requiriendo mayores detalles, aclaraciones o para llenar cualquier vacío o ambigüedad que pueda encontrarse en Información de las obras. Su objetivo principal es resolver las consultas sobre la información de las obras y, puede, generar un cambio en la información de las obras. Puede ser solicitado por el Subcontratista, Contratista o Contratante (a través del Contratista).</p></div>
+        </div>
+    </div>
+    <div id="fcrDefModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+        <div class="bg-white rounded-lg shadow-2xl max-w-lg w-full">
+            <div class="flex justify-between items-center p-4 border-b"><h3 class="text-xl font-bold text-yellow-700">Definición: FCR</h3><button id="closeFcrDefModal" class="text-gray-500 text-3xl">&times;</button></div>
+            <div class="p-6"><p class="text-gray-700">Formato que se utiliza para solicitar un cambio de alcance o de ingeniería que se necesita para abordar alguna restricción, interferencia o cualquier problema técnico identificado en el Proyecto. Implican un cambio sustancial en la ingeniería del proyecto o al Expediente de Diseño e Ingeniería (EDI). Este documento puede ser generado por el Subcontratista de Construcción/Constructor o Contratista. El FCR es emitido al Gerente de Proyecto para su aceptación y cuenta con su propia codificación de entregable Aconex.</p></div>
+        </div>
+    </div>
+    <div id="eventoModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+        <div class="bg-white rounded-lg shadow-2xl max-w-lg w-full">
+            <div class="flex justify-between items-center p-4 border-b"><h3 class="text-xl font-bold text-green-700">Definición: Evento Compensable</h3><button id="closeEventoModal" class="text-gray-500 text-3xl">&times;</button></div>
+            <div class="p-6"><p class="text-gray-700">Un evento que, según el contrato NEC3 Opción F (Cláusula 60.1 y Z.60.1), puede dar lugar a un ajuste en el Costo y/o plazo del proyecto. Estos eventos incluyen condiciones físicas inesperadas (Cláusula 60.1 (12)), decisiones del Gerente del Proyecto (Cláusula 60.1 (4)), o riesgos asumidos por el Contratante (Cláusula 60.1 (14) y Z.80.1).</p></div>
+        </div>
+    </div>
+
 
     <script>
         // Generic Modal Logic
@@ -436,7 +486,11 @@
             { id: 'gerenteModal', openBtn: 'openGerenteModal', closeBtn: 'closeGerenteModal' },
             { id: 'contratistaModal', openBtn: 'openContratistaModal', closeBtn: 'closeContratistaModal' },
             { id: 'subcontratistaModal', openBtn: 'openSubcontratistaModal', closeBtn: 'closeSubcontratistaModal' },
-            { id: 'supervisorModal', openBtn: 'openSupervisorModal', closeBtn: 'closeSupervisorModal' }
+            { id: 'supervisorModal', openBtn: 'openSupervisorModal', closeBtn: 'closeSupervisorModal' },
+            { id: 'redLineModal', openBtn: 'openRedLineModal', closeBtn: 'closeRedLineModal' },
+            { id: 'rfiDefModal', openBtn: 'openRfiDefModal', closeBtn: 'closeRfiDefModal' },
+            { id: 'fcrDefModal', openBtn: 'openFcrDefModal', closeBtn: 'closeFcrDefModal' },
+            { id: 'eventoModal', openBtn: 'openEventoModal', closeBtn: 'closeEventoModal' }
         ];
 
         const openModal = (modal) => {
